@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HelpVisa - Consultoria de Vistos e Passaportes</title>
   <style>
-    /* Reset e configurações base */
+    /* ==== Reset & Base ==== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -33,101 +33,36 @@
       height: auto;
     }
 
-    /* Contexto móvel */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 15px;
-      }
+    /* Focus styles for accessibility */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid #3498db;
+      outline-offset: 2px;
     }
 
-    /* Header */
-    header {
-      background-color: #2c3e50;
-      color: #ecf0f1;
-      padding: 20px 0;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
+    /* ==== Variables (CSS) ==== */
+    :root {
+      --primary: #2c3e50;
+      --accent: #3498db;
+      --accent-hover: #2980b9;
+      --success: #25d366;
+      --light: #ecf0f1;
+      --dark-text: #333;
+      --gray: #7f8c8d;
+      --bg-light: #f4f7f6;
+      --white: #fff;
+      --section-bg: #fff;
     }
 
-    .header-container {
+    /* ==== Generic Elements ==== */
+    .section {
+      padding: 60px 0;
+    }
+
+    .container {
       max-width: 1200px;
       margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ecf0f1;
-      letter-spacing: 1px;
-    }
-
-    .logo span {
-      color: #3498db;
-    }
-
-    nav ul {
-      display: flex;
-      gap: 30px;
-    }
-
-    nav a {
-      color: #ecf0f1;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #3498db;
-    }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559391140-4b73e6b2e8aa?auto=format&fit=crop&w=1470&q=80');
-      background-size: cover;
-      background-position: center;
-      height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      margin-top: 80px;
       padding: 0 20px;
-    }
-
-    .hero h1 {
-      font-size: 42px;
-      margin-bottom: 15px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      display: inline-block;
-      background-color: #3498db;
-      color: #fff;
-      padding: 12px 28px;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #2980b9;
-    }
-
-    /* Services Section */
-    .services {
-      padding: 60px 0;
-      background-color: #fff;
     }
 
     .section-title {
@@ -138,38 +73,167 @@
     .section-title h2 {
       font-size: 32px;
       margin-bottom: 10px;
-      color: #2c3e50;
+      color: var(--primary);
     }
 
     .section-title p {
-      color: #7f8c8d;
+      color: var(--gray);
       max-width: 600px;
       margin: 0 auto;
     }
 
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 50px; /* botões arredondados */
+      font-weight: bold;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ==== Header ==== */
+    header {
+      background-color: var(--primary);
+      color: var(--light);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+
+    header.scrolled {
+      background: rgba(44, 62, 80, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    /* Mobile nav button */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--light);
+      transition: 0.3s;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--light);
+      font-size: 15px;
+      position: relative;
+      padding-bottom: 3px;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ==== Hero ==== */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1559391140-4b73e6b2e8aa?auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--light);
+      margin-top: 80px;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    /* ==== Services ==== */
+    .services .section-title p {
+      margin-bottom: 0;
+    }
+
     .services-container {
-      max-width: 1200px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
     }
 
     .service-card {
-      background: #f9f9f9;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      transition: transform 0.3s;
+      background: var(--section-bg);
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      border-top: 4px solid var(--accent);
     }
 
     .service-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
 
     .service-card h3 {
-      margin-bottom: 10px;
-      color: #2c3e50;
+      margin-bottom: 8px;
+      color: var(--primary);
     }
 
     .service-card p {
@@ -177,38 +241,43 @@
       font-size: 14px;
     }
 
-    /* Prices Section */
+    /* ==== Prices ==== */
     .prices {
-      padding: 60px 0;
-      background-color: #f4f7f6;
+      background: var(--bg-light);
     }
 
     .prices-container {
-      max-width: 1200px;
-      margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
+      gap: 25px;
     }
 
     .price-card {
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
+      background: var(--white);
+      padding: 35px 25px;
+      border-radius: 10px;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .price-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
     }
 
     .price-card .price {
-      font-size: 36px;
-      color: #3498db;
-      margin: 10px 0;
+      font-size: 34px;
+      color: var(--accent);
+      margin: 15px 0;
+      display: block;
     }
 
     .price-card .period {
-      color: #7f8c8d;
+      color: var(--gray);
       font-size: 14px;
       margin-bottom: 20px;
+      display: block;
     }
 
     .price-card ul {
@@ -223,39 +292,30 @@
 
     .price-card .btn {
       width: 100%;
-      padding: 12px;
-      background: #3498db;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
       margin-top: 10px;
     }
 
-    .price-card .btn:hover {
-      background: #2980b9;
-    }
-
-    /* Testimonials Section */
+    /* ==== Testimonials ==== */
     .testimonials {
-      padding: 60px 0;
-      background-color: #fff;
+      background: var(--white);
     }
 
     .testimonials-container {
-      max-width: 1200px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
     }
 
     .testimonial-card {
       padding: 25px;
-      border-left: 4px solid #3498db;
       background: #fafafa;
-      border-radius: 0 8px 8px 0;
+      border-radius: 10px;
+      border-left: 4px solid var(--accent);
+      transition: box-shadow 0.3s;
+    }
+
+    .testimonial-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .testimonial-card p {
@@ -266,38 +326,49 @@
     .testimonial-card .client {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      margin-top: 10px;
     }
 
     .testimonial-card .client img {
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
       object-fit: cover;
     }
 
     .testimonial-card .client .name {
       font-weight: bold;
+      font-size: 15px;
     }
 
-    /* Contact Section */
+    .testimonial-client .city {
+      color: var(--gray);
+      font-size: 13px;
+    }
+
+    /* ==== Contact ==== */
     .contact {
-      padding: 60px 0;
-      background-color: #2c3e50;
-      color: #ecf0f1;
+      background: var(--primary);
+      color: var(--light);
     }
 
     .contact-container {
-      max-width: 1200px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
+      grid-template-columns: 1fr;
+      gap: 35px;
+      align-items: start;
+    }
+
+    @media (min-width: 768px) {
+      .contact-container {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
     }
 
     .contact-info h2 {
-      font-size: 32px;
+      font-size: 30px;
       margin-bottom: 20px;
     }
 
@@ -307,77 +378,120 @@
     }
 
     .contact-info .btn {
-      display: inline-block;
-      margin: 10px 5px;
+      margin: 8px 4px;
+      padding: 10px 20px;
+      font-size: 14px;
     }
 
     .contact-form {
       background: #34495e;
-      padding: 40px;
-      border-radius: 8px;
+      padding: 30px;
+      border-radius: 10px;
     }
 
     .contact-form h3 {
       margin-bottom: 20px;
-      color: #ecf0f1;
+      color: var(--light);
     }
 
     .contact-form input,
     .contact-form textarea {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 12px 15px;
+      margin: 8px 0;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       background: #2c3e50;
-      color: #ecf0f1;
-      font-size: 15px;
+      color: var(--light);
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      background: #3d566e;
+      outline: none;
     }
 
     .contact-form button {
       width: 100%;
-      padding: 12px;
-      background: #3498db;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      font-size: 16px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: var(--white);
+      margin-top: 12px;
+      font-size: 15px;
       cursor: pointer;
-      margin-top: 10px;
+      transition: background 0.3s, transform 0.2s;
     }
 
     .contact-form button:hover {
-      background: #2980b9;
+      background: var(--accent-hover);
+      transform: translateY(-2px);
     }
 
-    /* Footer */
+    /* ==== Footer ==== */
     footer {
-      background-color: #1a2528;
+      background: #1a2528;
       color: #7f8c8d;
       padding: 30px 0;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
     }
 
     .footer-container p {
-      margin: 10px 0;
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    /* ==== Animations ==== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delay for cards */
+    .fade-in.delay-1 { transition-delay: 0.1s; }
+    .fade-in.delay-2 { transition-delay: 0.2s; }
+    .fade-in.delay-3 { transition-delay: 0.3s; }
+    .fade-in.delay-4 { transition-delay: 0.4s; }
+
+    /* ==== Reduced motion ==== */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in {
+        transition: opacity 0.3s ease;
+      }
+      .btn:hover {
+        transform: none;
+      }
+      .service-card:hover {
+        transform: none;
+      }
+      .price-card:hover {
+        transform: none;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
+  <!-- ==== Header ==== -->
+  <header id="header">
     <div class="header-container">
       <a href="#" class="logo">HelpVisa<span>.com</span></a>
+
+      <!-- Botão de menu mobile -->
+      <button class="menu-toggle" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
       <nav>
-        <ul>
-          <li><a href="#inicio">Início</a></li>
+        <ul id="nav-list">
           <li><a href="#servicos">Serviços</a></li>
           <li><a href="#precos">Preços</a></li>
           <li><a href="#depoimentos">Depoimentos</a></li>
@@ -387,7 +501,7 @@
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- ==== Hero ==== -->
   <section class="hero">
     <div>
       <h1>Soluções completas para vistos e passaportes</h1>
@@ -396,7 +510,7 @@
     </div>
   </section>
 
-  <!-- Services -->
+  <!-- ==== Services ==== -->
   <section class="services" id="servicos">
     <div class="container">
       <div class="section-title">
@@ -405,27 +519,30 @@
       </div>
 
       <div class="services-container">
-        <div class="service-card">
+        <article class="fade-in delay-1 service-card">
           <h3>Consulta de Visto</h3>
           <p>Orientação completa sobre requisitos, documentação e prazos para solicitação de visto.</p>
-        </div>
-        <div class="service-card">
+        </article>
+
+        <article class="fade-in delay-2 service-card">
           <h3>Renovação de Passaporte</h3>
           <p>Ajudamos na renovação do seu passaporte, garantindo que todos os trâmites sejam realizados corretamente.</p>
-        </div>
-        <div class="service-card">
+        </article>
+
+        <article class="fade-in delay-3 service-card">
           <h3>Visto de Trabalho</h3>
           <p>Assessoria para solicitação de visto de trabalho em países como EUA, Canadá, Austrália e Europa.</p>
-        </div>
-        <div class="service-card">
+        </article>
+
+        <article class="fade-in delay-4 service-card">
           <h3>Visto Estudantil</h3>
           <p>Apoio na obtenção de visto estudantil, incluindo aceitação em instituições de ensino.</p>
-        </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Prices -->
+  <!-- ==== Prices ==== -->
   <section class="prices" id="precos">
     <div class="container">
       <div class="section-title">
@@ -436,7 +553,7 @@
       <div class="prices-container">
         <div class="price-card">
           <div class="price">R$ 199,00</div>
-          <div class="period">Consulta Basica</div>
+          <div class="period">Consulta Básica</div>
           <ul>
             <li>Análise de perfil</li>
             <li>Lista de documentos necessários</li>
@@ -472,7 +589,7 @@
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- ==== Testimonials ==== -->
   <section class="testimonials" id="depoimentos">
     <div class="container">
       <div class="section-title">
@@ -481,10 +598,10 @@
       </div>
 
       <div class="testimonials-container">
-        <div class="testimonial-card">
+        <div class="fade-in delay-1 testimonial-card">
           <p>"Excelente serviço! A equipe da HelpVisa me orientou em cada etapa do visto americano. Fácil, rápido e transparente."</p>
           <div class="client">
-            <img src="https://randomuser.me/api/portraits/women/27.jpg" alt="Cliente">
+            <img src="https://randomuser.me/api/portraits/women/27.jpg" alt="Maria">
             <div>
               <div class="name">Maria S.</div>
               <small>São Paulo, SP</small>
@@ -492,10 +609,10 @@
           </div>
         </div>
 
-        <div class="testimonial-card">
+        <div class="fade-in delay-2 testimonial-card">
           <p>"Renovação do passaporte foi tranquila. Recomendo muito a HelpVisa para quem precisa de agilidade e seriedade."</p>
           <div class="client">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos">
             <div>
               <div class="name">Carlos R.</div>
               <small>Rio de Janeiro, RJ</small>
@@ -503,10 +620,10 @@
           </div>
         </div>
 
-        <div class="testimonial-card">
+        <div class="fade-in delay-3 testimonial-card">
           <p>"Assistência completa para visto estudantil. Todos os documentos foram verificados e o processo foi muito mais fácil do que imaginei."</p>
           <div class="client">
-            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Cliente">
+            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Ana">
             <div>
               <div class="name">Ana L.</div>
               <small>Belo Horizonte, MG</small>
@@ -517,7 +634,7 @@
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- ==== Contact ==== -->
   <section class="contact" id="contato">
     <div class="container">
       <div class="contact-container">
@@ -526,17 +643,17 @@
           <p>Estamos prontos para ajudar você a realizar seu sonho de viajar. Escolha o meio de contato que preferir.</p>
 
           <div style="margin: 20px 0;">
-            <a href="https://wa.me/5567992961930" target="_blank" class="btn" style="background:#25d366; padding: 12px 24px; font-size: 15px;">
+            <a href="https://wa.me/5567992961930" target="_blank" class="btn" style="background: var(--success); color: #fff; padding: 12px 24px; font-size: 15px;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3.5h3m2 3.5h3m2 3.5h3"/></svg>
               WhatsApp
             </a>
-            <a href="mailto:emilly.helpvisa@gmail.com" class="btn" style="background:#7f8c8d; padding: 12px 24px; margin-left: 10px; color:#ecf0f1;">
+            <a href="mailto:emilly.helpvisa@gmail.com" class="btn" style="background: #7f8c8d; color: #ecf0f1; padding: 12px 24px; margin-left: 10px;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="9 10 12 10 15 10"/><line points="12 6 12 10"/><line points="12 14 12 18"/></svg>
               Email
             </a>
           </div>
 
-          <p><strong>Horário de atendimento:</segunda a sexta, 9h às 18h</p>
+          <p><strong>Horário de atendimento:</strong> segunda a sexta, 9h às 18h</p>
         </div>
 
         <div class="contact-form">
@@ -553,13 +670,79 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ==== Footer ==== -->
   <footer>
     <div class="footer-container">
       <p>&copy; 2025 HelpVisa. Todos os direitos reservados.</p>
       <p>CNPJ: XX.XXX.XXX/0001-00 | Inscrição Estadual: XXXXXXX-X</p>
     </div>
   </footer>
+
+  <!-- ==== JS para menu mobile ==== -->
+  <script>
+    // Toggle menu mobile
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navList = document.getElementById('nav-list');
+
+    if (menuToggle && navList) {
+      menuToggle.addEventListener('click', () => {
+        navList.classList.toggle('active');
+        // Animação dos tracinhos
+        const spans = menuToggle.querySelectorAll('span');
+        if (navList.classList.contains('active')) {
+          spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+          spans[1].style.opacity = '0';
+          spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+        } else {
+          spans[0].style.transform = 'none';
+          spans[1].style.opacity = '1';
+          spans[2].style.transform = 'none';
+        }
+      });
+    }
+
+    // Fechar menu ao clicar em um link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navList.classList.contains('active')) {
+          navList.classList.remove('active');
+          menuToggle.querySelectorAll('span')[0].style.transform = 'none';
+          menuToggle.querySelectorAll('span')[1].style.opacity = '1';
+          menuToggle.querySelectorAll('span')[2].style.transform = 'none';
+        }
+      });
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    if (header) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }
+
+    // Reveal on scroll - fade in items
+    const fades = document.querySelectorAll('.fade-in');
+
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight / 5 * 4;
+      
+      fades.forEach(fade => {
+        const fadeTop = fade.getBoundingClientRect().top;
+        
+        if (fadeTop < triggerBottom) {
+          fade.classList.add('visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
 
 </body>
 </html>
