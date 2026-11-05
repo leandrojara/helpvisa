@@ -250,11 +250,8 @@
       outline-offset: 2px;
     }
 
-    /* Mobile menu toggle */
+    /* Hide desktop nav when sidebar is open on mobile */
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
       nav ul {
         display: none;
       }
@@ -561,6 +558,16 @@
   <header id="header">
     <div class="header-container">
       <a href="#" class="logo">HelpVisa<span>.com</span></a>
+
+      <!-- Menu desktop (sempre visível em telas > 768px) -->
+      <nav>
+        <ul id="nav-list-desktop">
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#precos">Preços</a></li>
+          <li><a href="#depoimentos">Depoimentos</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
 
       <!-- Botão de menu mobile (sandwich) -->
       <button class="menu-toggle" aria-label="Abrir menu" id="menuToggle">
