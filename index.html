@@ -33,7 +33,6 @@
       height: auto;
     }
 
-    /* Focus styles for accessibility */
     a:focus-visible,
     button:focus-visible {
       outline: 2px solid #3498db;
@@ -85,7 +84,7 @@
     .btn {
       display: inline-block;
       padding: 12px 28px;
-      border-radius: 50px; /* botões arredondados */
+      border-radius: 50px;
       font-weight: bold;
       font-size: 15px;
       transition: all 0.3s ease;
@@ -125,6 +124,7 @@
       justify-content: space-between;
       align-items: center;
       height: 80px;
+      padding: 0 20px;
     }
 
     .logo {
@@ -137,19 +137,35 @@
       color: var(--accent);
     }
 
-    /* Mobile nav button */
+    /* Mobile menu toggle */
     .menu-toggle {
       display: none;
       flex-direction: column;
       gap: 5px;
       cursor: pointer;
+      padding: 8px;
+      background: none;
+      border: none;
     }
 
     .menu-toggle span {
-      width: 25px;
+      width: 28px;
       height: 3px;
       background: var(--light);
       transition: 0.3s;
+      position: relative;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
     }
 
     nav ul {
@@ -178,6 +194,67 @@
 
     nav a:hover::after {
       width: 100%;
+    }
+
+    /* ==== Sidebar Mobile Menu ==== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      bottom: 0;
+      width: 280px;
+      background: var(--primary);
+      z-index: 1001;
+      transition: left 0.3s ease;
+      overflow-y: auto;
+      padding-top: 80px;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar a {
+      color: var(--light);
+      display: block;
+      padding: 12px 25px;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    .sidebar a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Hide desktop nav when sidebar is open on mobile */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+      }
     }
 
     /* ==== Hero ==== */
@@ -453,13 +530,12 @@
       transform: translateY(0);
     }
 
-    /* Stagger delay for cards */
     .fade-in.delay-1 { transition-delay: 0.1s; }
     .fade-in.delay-2 { transition-delay: 0.2s; }
     .fade-in.delay-3 { transition-delay: 0.3s; }
     .fade-in.delay-4 { transition-delay: 0.4s; }
 
-    /* ==== Reduced motion ==== */
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .fade-in {
         transition: opacity 0.3s ease;
@@ -483,21 +559,25 @@
     <div class="header-container">
       <a href="#" class="logo">HelpVisa<span>.com</span></a>
 
-      <!-- Botão de menu mobile -->
-      <button class="menu-toggle" aria-label="Abrir menu">
+      <!-- Botão de menu mobile (sandwich) -->
+      <button class="menu-toggle" aria-label="Abrir menu" id="menuToggle">
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <nav>
+      <!-- Sidebar mobile menu -->
+      <div class="sidebar" id="sidebar">
         <ul id="nav-list">
           <li><a href="#servicos">Serviços</a></li>
           <li><a href="#precos">Preços</a></li>
           <li><a href="#depoimentos">Depoimentos</a></li>
           <li><a href="#contato">Contato</a></li>
         </ul>
-      </nav>
+      </div>
+
+      <!-- Overlay para fechar o menu -->
+      <div class="menu-overlay" id="menuOverlay"></div>
     </div>
   </header>
 
@@ -678,40 +758,44 @@
     </div>
   </footer>
 
-  <!-- ==== JS para menu mobile ==== -->
+  <!-- ==== JS para menu mobile (sandwich -> sidebar) ==== -->
   <script>
-    // Toggle menu mobile
-    const menuToggle = document.querySelector('.menu-toggle');
+    // Elementos do menu mobile
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const menuOverlay = document.getElementById('menuOverlay');
     const navList = document.getElementById('nav-list');
 
-    if (menuToggle && navList) {
-      menuToggle.addEventListener('click', () => {
-        navList.classList.toggle('active');
-        // Animação dos tracinhos
-        const spans = menuToggle.querySelectorAll('span');
-        if (navList.classList.contains('active')) {
-          spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-          spans[1].style.opacity = '0';
-          spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        } else {
-          spans[0].style.transform = 'none';
-          spans[1].style.opacity = '1';
-          spans[2].style.transform = 'none';
-        }
-      });
+    // Função para abrir/fechar menu
+    function toggleMenu() {
+      const isOpen = sidebar.classList.contains('open');
+      
+      if (!isOpen) {
+        sidebar.classList.add('open');
+        menuOverlay.classList.add('open');
+        menuToggle.classList.add('active');
+      } else {
+        sidebar.classList.remove('open');
+        menuOverlay.classList.remove('open');
+        menuToggle.classList.remove('active');
+      }
     }
 
-    // Fechar menu ao clicar em um link
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        if (navList.classList.contains('active')) {
-          navList.classList.remove('active');
-          menuToggle.querySelectorAll('span')[0].style.transform = 'none';
-          menuToggle.querySelectorAll('span')[1].style.opacity = '1';
-          menuToggle.querySelectorAll('span')[2].style.transform = 'none';
-        }
+    // Event listeners
+    if (menuToggle && sidebar && menuOverlay) {
+      // Abrir/fechar ao clicar no botão sandwich
+      menuToggle.addEventListener('click', toggleMenu);
+      
+      // Fechar ao clicar no overlay
+      menuOverlay.addEventListener('click', toggleMenu);
+      
+      // Fechar ao clicar em um link
+      document.querySelectorAll('.sidebar a').forEach(link => {
+        link.addEventListener('click', () => {
+          toggleMenu();
+        });
       });
-    });
+    }
 
     // Header scroll effect
     const header = document.getElementById('header');
