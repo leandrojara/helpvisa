@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HelpVisa - Consultoria de Vistos e Passaportes</title>
+  <style>
+    /* Reset e configurações base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f7f6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Contexto móvel */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 15px;
+      }
+    }
+
+    /* Header */
+    header {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      padding: 20px 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ecf0f1;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #3498db;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: #ecf0f1;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #3498db;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559391140-4b73e6b2e8aa?auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      margin-top: 80px;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #3498db;
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 60px 0;
+      background-color: #fff;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .section-title p {
+      color: #7f8c8d;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .services-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: #f9f9f9;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-card h3 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .service-card p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Prices Section */
+    .prices {
+      padding: 60px 0;
+      background-color: #f4f7f6;
+    }
+
+    .prices-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .price-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .price-card .price {
+      font-size: 36px;
+      color: #3498db;
+      margin: 10px 0;
+    }
+
+    .price-card .period {
+      color: #7f8c8d;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .price-card ul {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .price-card ul li {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .price-card .btn {
+      width: 100%;
+      padding: 12px;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .price-card .btn:hover {
+      background: #2980b9;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+      padding: 60px 0;
+      background-color: #fff;
+    }
+
+    .testimonials-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      padding: 25px;
+      border-left: 4px solid #3498db;
+      background: #fafafa;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .testimonial-card p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    .testimonial-card .client {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .testimonial-card .client img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .testimonial-card .client .name {
+      font-weight: bold;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 60px 0;
+      background-color: #2c3e50;
+      color: #ecf0f1;
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .contact-info h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      margin-bottom: 20px;
+      color: #bdc3c7;
+    }
+
+    .contact-info .btn {
+      display: inline-block;
+      margin: 10px 5px;
+    }
+
+    .contact-form {
+      background: #34495e;
+      padding: 40px;
+      border-radius: 8px;
+    }
+
+    .contact-form h3 {
+      margin-bottom: 20px;
+      color: #ecf0f1;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background: #2c3e50;
+      color: #ecf0f1;
+      font-size: 15px;
+    }
+
+    .contact-form button {
+      width: 100%;
+      padding: 12px;
+      background: #3498db;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .contact-form button:hover {
+      background: #2980b9;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1a2528;
+      color: #7f8c8d;
+      padding: 30px 0;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-container p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo">HelpVisa<span>.com</span></a>
+      <nav>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#precos">Preços</a></li>
+          <li><a href="#depoimentos">Depoimentos</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>Soluções completas para vistos e passaportes</h1>
+      <p>Facilitamos sua viagem internacional com assessoria especializada</p>
+      <a href="#contato" class="btn">Solicitar Orçamento</a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="servicos">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nossos Serviços</h2>
+        <p>Oferecemos assessoria personalizada para diversos tipos de vistos e passaportes</p>
+      </div>
+
+      <div class="services-container">
+        <div class="service-card">
+          <h3>Consulta de Visto</h3>
+          <p>Orientação completa sobre requisitos, documentação e prazos para solicitação de visto.</p>
+        </div>
+        <div class="service-card">
+          <h3>Renovação de Passaporte</h3>
+          <p>Ajudamos na renovação do seu passaporte, garantindo que todos os trâmites sejam realizados corretamente.</p>
+        </div>
+        <div class="service-card">
+          <h3>Visto de Trabalho</h3>
+          <p>Assessoria para solicitação de visto de trabalho em países como EUA, Canadá, Austrália e Europa.</p>
+        </div>
+        <div class="service-card">
+          <h3>Visto Estudantil</h3>
+          <p>Apoio na obtenção de visto estudantil, incluindo aceitação em instituições de ensino.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prices -->
+  <section class="prices" id="precos">
+    <div class="container">
+      <div class="section-title">
+        <h2>Preços</h2>
+        <p>Transparência e condições justas para nossos serviços</p>
+      </div>
+
+      <div class="prices-container">
+        <div class="price-card">
+          <div class="price">R$ 199,00</div>
+          <div class="period">Consulta Basica</div>
+          <ul>
+            <li>Análise de perfil</li>
+            <li>Lista de documentos necessários</li>
+            <li>Orientação de preenchimento</li>
+          </ul>
+          <button class="btn">Selecionar</button>
+        </div>
+
+        <div class="price-card">
+          <div class="price">R$ 499,00</div>
+          <div class="period">Pacote Completo</div>
+          <ul>
+            <li>Todos os itens da consulta básica</li>
+            <li>Preenchimento de formulários</li>
+            <li>Agendamento de consulados</li>
+            <li>Acompanhamento até a aprovação</li>
+          </ul>
+          <button class="btn">Selecionar</button>
+        </div>
+
+        <div class="price-card">
+          <div class="price">R$ 899,00</div>
+          <div class="period">Premium (Visto Trabalho/Estudo)</div>
+          <ul>
+            <li>Todos os itens do pacote completo</li>
+            <li>Consultoria de entrevista</li>
+            <li>Serviço de courier</li>
+            <li>Suporte 30 dias pós-aprovação</li>
+          </ul>
+          <button class="btn">Selecionar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials" id="depoimentos">
+    <div class="container">
+      <div class="section-title">
+        <h2>O que nossos clientes dizem</h2>
+        <p>Histórias de sucesso e satisfação</p>
+      </div>
+
+      <div class="testimonials-container">
+        <div class="testimonial-card">
+          <p>"Excelente serviço! A equipe da HelpVisa me orientou em cada etapa do visto americano. Fácil, rápido e transparente."</p>
+          <div class="client">
+            <img src="https://randomuser.me/api/portraits/women/27.jpg" alt="Cliente">
+            <div>
+              <div class="name">Maria S.</div>
+              <small>São Paulo, SP</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p>"Renovação do passaporte foi tranquila. Recomendo muito a HelpVisa para quem precisa de agilidade e seriedade."</p>
+          <div class="client">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente">
+            <div>
+              <div class="name">Carlos R.</div>
+              <small>Rio de Janeiro, RJ</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p>"Assistência completa para visto estudantil. Todos os documentos foram verificados e o processo foi muito mais fácil do que imaginei."</p>
+          <div class="client">
+            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Cliente">
+            <div>
+              <div class="name">Ana L.</div>
+              <small>Belo Horizonte, MG</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contato">
+    <div class="container">
+      <div class="contact-container">
+        <div class="contact-info">
+          <h2>Entre em Contato</h2>
+          <p>Estamos prontos para ajudar você a realizar seu sonho de viajar. Escolha o meio de contato que preferir.</p>
+
+          <div style="margin: 20px 0;">
+            <a href="https://wa.me/5567992961930" target="_blank" class="btn" style="background:#25d366; padding: 12px 24px; font-size: 15px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3.5h3m2 3.5h3m2 3.5h3"/></svg>
+              WhatsApp
+            </a>
+            <a href="mailto:emilly.helpvisa@gmail.com" class="btn" style="background:#7f8c8d; padding: 12px 24px; margin-left: 10px; color:#ecf0f1;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="9 10 12 10 15 10"/><line points="12 6 12 10"/><line points="12 14 12 18"/></svg>
+              Email
+            </a>
+          </div>
+
+          <p><strong>Horário de atendimento:</segunda a sexta, 9h às 18h</p>
+        </div>
+
+        <div class="contact-form">
+          <h3>Mensagem</h3>
+          <form>
+            <input type="text" placeholder="Seu nome" required>
+            <input type="email" placeholder="Seu email" required>
+            <input type="tel" placeholder="Seu WhatsApp (com DDD)">
+            <textarea rows="4" placeholder="Como podemos ajudar?"></textarea>
+            <button type="submit">Enviar Mensagem</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2025 HelpVisa. Todos os direitos reservados.</p>
+      <p>CNPJ: XX.XXX.XXX/0001-00 | Inscrição Estadual: XXXXXXX-X</p>
+    </div>
+  </footer>
+
+</body>
+</html>
