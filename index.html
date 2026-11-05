@@ -250,8 +250,11 @@
       outline-offset: 2px;
     }
 
-    /* Hide desktop nav when sidebar is open on mobile */
+    /* Mobile menu toggle */
     @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
       nav ul {
         display: none;
       }
